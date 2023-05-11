@@ -1,11 +1,12 @@
 #!python3
 
-import inquirer
 import git
-import sys
+import inquirer
 import requests
+import signal
+import sys
 
-version = 2
+version = 3
 
 class bcolors:
   HEADER = '\033[95m'
@@ -30,6 +31,11 @@ for line in scriptFile.text.splitlines():
     print(' Go to https://github.com/mbrammer/git-trailer-prompt and install the latest version.')
     print('======================================================================================')
     print(bcolors.END)
+
+def handler(signum, frame):
+  sys.exit('Nothing committed! Bye!')
+ 
+signal.signal(signal.SIGINT, handler)
 
 try:
   repo = git.Repo('.')
