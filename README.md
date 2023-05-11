@@ -1,7 +1,8 @@
 # Git trailer prompt
 
 This script will provide an easy way to do git commits with changelog trailers.  
-It will let you choose if you want to provide a changelog commit or a usual commit.
+It will let you choose if you want to provide a changelog commit or a usual commit.  
+So this would basically replace the step of `git commit [...]`.
 
 **Usual commit example:**
 ```
