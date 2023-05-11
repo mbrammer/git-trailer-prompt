@@ -29,6 +29,9 @@ $ commit
 [?] Please provide a non-technical changelog message: Fixed the most hated bug
 ```
 
+## Requirements
+- Python3
+
 ## Installation
 
 Just run
