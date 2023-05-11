@@ -17,14 +17,14 @@ if answers_provide_changelog['changelog']:
     inquirer.List('trailer',
         message="Please select a changelog type ans press enter",
         choices=[
-          'added',
-          'fixed',
-          'changed',
-          'deprecated',
-          'removed',
-          'security',
-          'performance',
-          'other',
+          'added: New feature',
+          'fixed: Bug fix',
+          'changed: Feature change',
+          'deprecated: New deprecation',
+          'removed: Feature removal',
+          'security: Security fix',
+          'performance: Performance improvement',
+          'other: Other',
         ],
     ),
     inquirer.Text('message', message='Please provide a non-technical changelog message'),
@@ -32,7 +32,9 @@ if answers_provide_changelog['changelog']:
 
   answers_changelog = inquirer.prompt(questions_changelog)
 
-  repo.git.commit('-m', answers_changelog["message"], trailer=f'Changelog: {answers_changelog["trailer"]}')
+  trailer = answers_changelog["trailer"].split(':')
+
+  repo.git.commit('-m', answers_changelog["message"], trailer=f'Changelog: {trailer[0]}')
 else:
   questions_commit = [
     inquirer.Text('message', message='Please provide a commit message'),
