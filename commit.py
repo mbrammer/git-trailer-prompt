@@ -5,16 +5,31 @@ import git
 import sys
 import requests
 
-version = 1
+version = 2
+
+class bcolors:
+  HEADER = '\033[95m'
+  OKBLUE = '\033[94m'
+  OKCYAN = '\033[96m'
+  OKGREEN = '\033[92m'
+  WARNING = '\033[93m'
+  FAIL = '\033[91m'
+  END = '\033[0m'
+  BOLD = '\033[1m'
+  UNDERLINE = '\033[4m'
 
 scriptFile = requests.get('https://raw.githubusercontent.com/mbrammer/git-trailer-prompt/main/commit.py')
 
 for line in scriptFile.text.splitlines():
-  if "version =" in line and int(line.split(' = ')[1]) < version:
+  version_line = line.split(' = ')
+
+  if "version =" in line and version_line[0] == 'version' and int(version_line[1]) < version:
+    print(bcolors.HEADER)
     print('======================================================================================')
-    print(' A newer version of XXX is available.')
+    print(' A newer version of git-trailer-prompt is available.')
     print(' Go to https://github.com/mbrammer/git-trailer-prompt and install the latest version.')
     print('======================================================================================')
+    print(bcolors.END)
 
 try:
   repo = git.Repo('.')
