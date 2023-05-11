@@ -1,5 +1,34 @@
 # Git trailer prompt
 
+This script will provide an easy way to do git commits with changelog trailers.  
+It will let you choose if you want to provide a changelog commit or a usual commit.
+
+**Usual commit example:**
+```
+$ commit
+[?] Do you want to create a changelog message (y/N): N
+
+[?] Please provide a commit message: initial commit
+```
+
+**Changelog example:**
+```
+$ commit
+[?] Do you want to create a changelog message (y/N): y
+
+[?] Please select a changelog type ans press enter: fixed: Bug fix
+   added: New feature
+ > fixed: Bug fix
+   changed: Feature change
+   deprecated: New deprecation
+   removed: Feature removal
+   security: Security fix
+   performance: Performance improvement
+   other: Other
+
+[?] Please provide a non-technical changelog message: Fixed the most hated bug
+```
+
 ## Installation
 
 Just run
