@@ -2,9 +2,31 @@
 
 import inquirer
 import git
+import sys
+import requests
 
-repo = git.Repo('.')
-# repo.git.add('--all')
+version = 1
+
+scriptFile = requests.get('https://raw.githubusercontent.com/mbrammer/git-trailer-prompt/main/commit.py')
+
+for line in scriptFile.text.splitlines():
+  if "version =" in line and int(line.split(' = ')[1]) < version:
+    print('======================================================================================')
+    print(' A newer version of XXX is available.')
+    print(' Go to https://github.com/mbrammer/git-trailer-prompt and install the latest version.')
+    print('======================================================================================')
+
+try:
+  repo = git.Repo('.')
+except:
+  sys.exit('This directory is not a git repository.')
+
+if not repo.is_dirty(untracked_files=True):
+  sys.exit('You have no changes in the repository.')
+
+if len(repo.index.diff("HEAD")) == 0:
+  sys.exit('There is nothing to commit.')
+  # repo.git.add('--all')
 
 questions_provide_changelog = [
   inquirer.Confirm("changelog", message="Do you want to create a changelog message"),
