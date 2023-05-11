@@ -14,7 +14,7 @@ Follow these steps:
 1. Add the commit.py script somewhere you want to store it
 2. Pick one of these options:
    - Call it there from your project folder `my-git-repo/$ ./path/to/commit.py`
-   - Add it to you PATH variable to call globally
+   - Add it to you PATH variable to call it globally
    - Create an alias to call it globally (see "Setting up an alias" below)
 
 ## Usage
