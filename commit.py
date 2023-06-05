@@ -3,10 +3,13 @@
 import git
 import inquirer
 import requests
+from rich.console import Console
 import signal
 import sys
 
-version = 3
+version = 4
+
+console = Console()
 
 class bcolors:
   HEADER = '\033[95m'
@@ -77,7 +80,8 @@ if answers_provide_changelog['changelog']:
 
   trailer = answers_changelog["trailer"].split(':')
 
-  repo.git.commit('-m', answers_changelog["message"], trailer=f'Changelog: {trailer[0]}')
+  with console.status("[bold green]Working on commit...") as status:
+    repo.git.commit('-m', answers_changelog["message"], trailer=f'Changelog: {trailer[0]}')
 else:
   questions_commit = [
     inquirer.Text('message', message='Please provide a commit message'),
@@ -85,4 +89,5 @@ else:
 
   answers_commit = inquirer.prompt(questions_commit)
 
-  repo.git.commit('-m', answers_commit["message"])
+  with console.status("[bold green]Working on commit...") as status:
+    repo.git.commit('-m', answers_commit["message"])
