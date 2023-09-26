@@ -1,13 +1,14 @@
 #!python3
 
 import git
+import os
 import inquirer
 import requests
 from rich.console import Console
 import signal
 import sys
 
-version = 4
+version = 5
 
 console = Console()
 
@@ -81,7 +82,8 @@ if answers_provide_changelog['changelog']:
   trailer = answers_changelog["trailer"].split(':')
 
   with console.status("[bold green]Working on commit...") as status:
-    repo.git.commit('-m', answers_changelog["message"], trailer=f'Changelog: {trailer[0]}')
+    os.system(f"git commit -m '{answers_changelog['message']}' --trailer 'Changelog: {trailer[0]}'")
+    # repo.git.commit('-m', answers_changelog["message"], trailer=f'Changelog: {trailer[0]}')
 else:
   questions_commit = [
     inquirer.Text('message', message='Please provide a commit message'),
@@ -90,4 +92,5 @@ else:
   answers_commit = inquirer.prompt(questions_commit)
 
   with console.status("[bold green]Working on commit...") as status:
-    repo.git.commit('-m', answers_commit["message"])
+    os.system(f"git commit -m '{answers_commit['message']}'")
+    # repo.git.commit('-m', answers_commit["message"])
