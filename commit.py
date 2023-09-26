@@ -7,8 +7,15 @@ import requests
 from rich.console import Console
 import signal
 import sys
+import argparse
 
-version = 5
+version = 6
+
+parser = argparse.ArgumentParser(description=f'git-trailer-prompt (v{version})')
+parser.add_argument("-v", "--version", action='version', version=f'v{version}')
+parser.add_argument("--update", action='store_true', help='Download and install the latest version')
+
+args = parser.parse_args()
 
 console = Console()
 
@@ -23,6 +30,12 @@ class bcolors:
   BOLD = '\033[1m'
   UNDERLINE = '\033[4m'
 
+if args.update:
+  console.print("[bold yellow]Updating git-trailer-prompt...")
+  os.system("git clone git@github.com:mbrammer/git-trailer-prompt.git && cd git-trailer-prompt && sh ./setup.sh")
+  console.print("[bold yellow]Update completed!")
+  sys.exit()
+
 scriptFile = requests.get('https://raw.githubusercontent.com/mbrammer/git-trailer-prompt/main/commit.py')
 
 for line in scriptFile.text.splitlines():
@@ -30,10 +43,12 @@ for line in scriptFile.text.splitlines():
 
   if "version =" in line and version_line[0] == 'version' and int(version_line[1]) < version:
     print(bcolors.HEADER)
-    print('======================================================================================')
+    print('=====================================================================================')
     print(' A newer version of git-trailer-prompt is available.')
-    print(' Go to https://github.com/mbrammer/git-trailer-prompt and install the latest version.')
-    print('======================================================================================')
+    print(f' Your current version is v{version}. Update to v{version_line[1]} now!')
+    print(' Run the git-trailer-prompt script with the `--update` argument or follow the')
+    print(' README.md on https://github.com/mbrammer/git-trailer-prompt for manual installation.')
+    print('=====================================================================================')
     print(bcolors.END)
 
 def handler(signum, frame):
